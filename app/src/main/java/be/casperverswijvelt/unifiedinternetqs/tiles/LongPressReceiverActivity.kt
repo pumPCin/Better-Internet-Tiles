@@ -38,16 +38,12 @@ class LongPressReceiverActivity : Activity() {
                 WifiTileService::class.java.name -> {
                     Settings.ACTION_WIFI_SETTINGS
                 }
-                NFCTileService::class.java.name -> {
-                    Settings.ACTION_NFC_SETTINGS
-                }
                 AirplaneModeTileService::class.java.name -> {
                     Settings.ACTION_AIRPLANE_MODE_SETTINGS
                 }
-                BluetoothTileService::class.java.name -> {
-                    Settings.ACTION_BLUETOOTH_SETTINGS
+                else -> {
+                    Settings.ACTION_WIRELESS_SETTINGS
                 }
-                else -> Settings.ACTION_WIRELESS_SETTINGS
             }
         )
 

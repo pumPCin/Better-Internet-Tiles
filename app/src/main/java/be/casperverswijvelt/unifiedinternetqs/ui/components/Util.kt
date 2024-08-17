@@ -246,8 +246,6 @@ sealed class PermissionInfo(
             R.string.mobile_data,
             R.string.internet,
             R.string.airplane_mode,
-            R.string.nfc,
-            R.string.bluetooth,
         )
     )
 
@@ -257,14 +255,6 @@ sealed class PermissionInfo(
         arrayOf(
             R.string.mobile_data,
             R.string.internet,
-        )
-    )
-
-    data object BluetoothConnect : PermissionInfo(
-        R.string.bluetooth_connect,
-        R.string.bluetooth_connect_description,
-        arrayOf(
-            R.string.bluetooth
         )
     )
 }

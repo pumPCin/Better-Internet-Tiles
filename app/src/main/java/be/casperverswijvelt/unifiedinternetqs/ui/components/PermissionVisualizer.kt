@@ -93,14 +93,6 @@ fun PermissionVisualizer (
         ) {
             tempPermissionWarnings.add(PermissionInfo.ReadPhoneState)
         }
-
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            tempPermissionWarnings.add(PermissionInfo.BluetoothConnect)
-        }
         permissionWarnings = tempPermissionWarnings
     }
 
@@ -182,9 +174,6 @@ fun PermissionVisualizer (
                                 when (it) {
                                     PermissionInfo.Shell -> {
                                         navController.navigate(NavRoute.SettingsShell.route)
-                                    }
-                                    PermissionInfo.BluetoothConnect -> {
-                                        launcher.launch(Manifest.permission.BLUETOOTH_CONNECT)
                                     }
                                     PermissionInfo.ReadPhoneState -> {
                                         launcher.launch(Manifest.permission.READ_PHONE_STATE)
