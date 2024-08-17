@@ -15,6 +15,7 @@
     <string name="good_to_go_description">All needed permissions are granted, check out the available tiles below!</string>
     <string name="hidden">Hidden</string>
     <string name="hidden_during_recording">Hidden during recording</string>
+    <string name="hide_service_description">This notification ensures the tiles work correctly. Feel free to hide it.</string>
     <string name="hide_service_title">Hide me!</string>
     <string name="hide_wifi_name">Hide Wi-Fi name</string>
     <string name="hide_wifi_name_description">Setting applies to both Wi-Fi and Internet tiles</string>

@@ -14,6 +14,7 @@
     <string name="good_to_go_description">Все необходимые разрешения предоставлены, посмотрите доступные переключатели внизу!</string>
     <string name="hidden">Скрыто</string>
     <string name="hidden_during_recording">Скрыто во время записи</string>
+    <string name="hide_service_description">Это уведомление обеспечивает правильную работу плиток. Уведомление можно скрыть.</string>
     <string name="hide_service_title">Спрячь меня!</string>
     <string name="hide_wifi_name">Скрыть имя сети</string>
     <string name="hide_wifi_name_description">Настройка применяется к переключателям \'Wi-Fi\' и \'Сеть\'</string>
