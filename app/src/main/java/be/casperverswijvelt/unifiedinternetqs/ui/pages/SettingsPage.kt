@@ -71,7 +71,7 @@ fun BaseSettings(
 
             PreferenceEntry(
                 icon = {
-                    DrawableIcon(R.drawable.baseline_translate_24)
+                    DrawableIcon(R.drawable.baseline_translate)
                 },
                 title = stringResource(R.string.language),
                 subTitle = Resources.getSystem().configuration.locales[0].displayLanguage

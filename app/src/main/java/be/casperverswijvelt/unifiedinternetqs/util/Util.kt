@@ -3,7 +3,6 @@ package be.casperverswijvelt.unifiedinternetqs.util
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
-import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,7 +10,6 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
-import android.nfc.NfcManager
 import android.os.Build
 import android.provider.Settings
 import android.service.quicksettings.TileService
@@ -25,10 +23,8 @@ import be.casperverswijvelt.unifiedinternetqs.R
 import be.casperverswijvelt.unifiedinternetqs.data.BITPreferences
 import be.casperverswijvelt.unifiedinternetqs.data.ShellMethod
 import be.casperverswijvelt.unifiedinternetqs.tiles.AirplaneModeTileService
-import be.casperverswijvelt.unifiedinternetqs.tiles.BluetoothTileService
 import be.casperverswijvelt.unifiedinternetqs.tiles.InternetTileService
 import be.casperverswijvelt.unifiedinternetqs.tiles.MobileDataTileService
-import be.casperverswijvelt.unifiedinternetqs.tiles.NFCTileService
 import be.casperverswijvelt.unifiedinternetqs.tiles.WifiTileService
 import be.casperverswijvelt.unifiedinternetqs.ui.MainActivity
 import com.topjohnwu.superuser.Shell
@@ -73,18 +69,6 @@ fun getWifiEnabled(context: Context): Boolean {
         ?.isWifiEnabled ?: false
 }
 
-fun getNFCEnabled(context: Context): Boolean {
-
-    return (context.getSystemService(Context.NFC_SERVICE) as? NfcManager)
-        ?.defaultAdapter?.isEnabled ?: false
-}
-
-fun getBluetoothEnabled(context: Context): Boolean {
-
-    return (context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager)
-        ?.adapter?.isEnabled ?: false
-}
-
 fun getAirplaneModeEnabled(context: Context): Boolean {
 
     return Settings.Global.getInt(
@@ -104,7 +88,7 @@ fun getConnectedWifiSSID(
             "dumpsys netstats | grep -E 'iface=wlan.*(networkId|wifiNetworkKey)'",
             context = context
         ) {
-            val pattern = "(?<=(networkId|wifiNetworkKey)=\").*(?=\")".toRegex()
+            val pattern = "(?<=(networkId|wifiNetworkKey)=\").*?(?=\")".toRegex()
             it?.out?.forEach { wifiString ->
                 pattern.find(wifiString)?.let { matchResult ->
                     callback(matchResult.value)
@@ -115,47 +99,6 @@ fun getConnectedWifiSSID(
         }
     } else {
         callback(null)
-    }
-}
-
-fun getWifiIcon(context: Context): Int {
-    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    val rssi = cm.activeNetwork?.let {
-        (cm.getNetworkCapabilities(it)?.transportInfo as? WifiInfo)?.rssi
-    }
-
-    val signalStrength = rssi?.let {
-        // We use 5 levels for our icon visualisation, so we use this deprecated
-        //  calculation with 'numLevels' parameter. We don't want to use the system's
-        //  level system since it might differ.
-        WifiManager.calculateSignalLevel(it, 5) // 0-4
-    } ?: 0
-
-    return when (signalStrength) {
-        4 -> R.drawable.ic_baseline_signal_wifi_4_bar_24
-        3 -> R.drawable.ic_baseline_signal_wifi_3_bar_24
-        2 -> R.drawable.ic_baseline_signal_wifi_2_bar_24
-        1 -> R.drawable.ic_baseline_signal_wifi_1_bar_24
-        else -> R.drawable.ic_baseline_signal_wifi_0_bar_24
-    }
-}
-
-fun getCellularNetworkIcon(context: Context): Int {
-
-    val tm =
-        context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-
-    // TODO: We should try to get the signal strength of the data sim here.
-    //  Only solution I found to do this requires fine location access, which I don't really want
-    //  to add.
-
-    return when (tm.signalStrength?.level ?: 0) {
-        4 -> R.drawable.ic_baseline_signal_cellular_4_bar_24
-        3 -> R.drawable.ic_baseline_signal_cellular_3_bar_24
-        2 -> R.drawable.ic_baseline_signal_cellular_2_bar_24
-        1 -> R.drawable.ic_baseline_signal_cellular_1_bar_24
-        else -> R.drawable.ic_baseline_signal_cellular_0_bar
     }
 }
 
@@ -185,7 +128,7 @@ fun getCellularNetworkText(
 
     var connType: String? = telephonyDisplayInfo?.let {
         when (telephonyDisplayInfo.overrideNetworkType) {
-            TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_LTE_CA -> "4G+"
+            TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_LTE_CA -> "LTE+"
             TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_LTE_ADVANCED_PRO -> "5Ge"
             TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_NR_NSA -> "5G"
             TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_NR_ADVANCED -> "5G+"
@@ -232,22 +175,23 @@ fun getDataSubscriptionInfo(context: Context): SubscriptionInfo? {
 private fun getNetworkClassString(networkType: Int): String? {
 
     return when (networkType) {
-        TelephonyManager.NETWORK_TYPE_GSM,
-        TelephonyManager.NETWORK_TYPE_GPRS,
-        TelephonyManager.NETWORK_TYPE_EDGE,
-        TelephonyManager.NETWORK_TYPE_CDMA,
-        TelephonyManager.NETWORK_TYPE_1xRTT -> "2G"
+        TelephonyManager.NETWORK_TYPE_1xRTT,
+        TelephonyManager.NETWORK_TYPE_GSM -> "2G-GSM"
+        TelephonyManager.NETWORK_TYPE_GPRS -> "2G-GPRS"
+        TelephonyManager.NETWORK_TYPE_EDGE -> "2G-EDGE"
+        TelephonyManager.NETWORK_TYPE_CDMA -> "2G-CDMA"
+
         TelephonyManager.NETWORK_TYPE_EVDO_0,
         TelephonyManager.NETWORK_TYPE_EVDO_A,
-        TelephonyManager.NETWORK_TYPE_EVDO_B,
-        TelephonyManager.NETWORK_TYPE_EHRPD,
-        TelephonyManager.NETWORK_TYPE_HSUPA,
-        TelephonyManager.NETWORK_TYPE_HSDPA,
-        TelephonyManager.NETWORK_TYPE_HSPA,
-        TelephonyManager.NETWORK_TYPE_HSPAP,
-        TelephonyManager.NETWORK_TYPE_UMTS,
-        TelephonyManager.NETWORK_TYPE_TD_SCDMA -> "3G"
-        TelephonyManager.NETWORK_TYPE_LTE,
+        TelephonyManager.NETWORK_TYPE_EVDO_B -> "3G-EVDO"
+        TelephonyManager.NETWORK_TYPE_EHRPD -> "3G-eHRPD"
+        TelephonyManager.NETWORK_TYPE_HSUPA -> "3G-HSUPA"
+        TelephonyManager.NETWORK_TYPE_HSDPA -> "3G-HSDPA"
+        TelephonyManager.NETWORK_TYPE_HSPA -> "3G-HSPA"
+        TelephonyManager.NETWORK_TYPE_HSPAP -> "3G-HSPA+"
+        TelephonyManager.NETWORK_TYPE_UMTS -> "3G-UMTS"
+        TelephonyManager.NETWORK_TYPE_TD_SCDMA -> "3G-SCDMA"
+        TelephonyManager.NETWORK_TYPE_LTE -> "LTE"
         TelephonyManager.NETWORK_TYPE_IWLAN -> "4G"
         TelephonyManager.NETWORK_TYPE_NR -> "5G"
         else -> null

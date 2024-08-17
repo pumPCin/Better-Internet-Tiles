@@ -7,5 +7,5 @@ class TileState {
     var label: String = ""
     var subtitle: String? = null
     var state: Int = Tile.STATE_INACTIVE
-    var icon: Int = R.drawable.ic_outline_info_24
+    var icon: Int = R.drawable.outline_info
 }

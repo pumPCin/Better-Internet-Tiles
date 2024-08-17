@@ -93,14 +93,6 @@ fun PermissionVisualizer (
         ) {
             tempPermissionWarnings.add(PermissionInfo.ReadPhoneState)
         }
-
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            tempPermissionWarnings.add(PermissionInfo.BluetoothConnect)
-        }
         permissionWarnings = tempPermissionWarnings
     }
 
@@ -132,7 +124,7 @@ fun PermissionVisualizer (
                 ) {
                     Image(
                         modifier = Modifier.width(24.dp),
-                        painter = painterResource(R.drawable.baseline_warning_amber_24),
+                        painter = painterResource(R.drawable.baseline_warning),
                         contentDescription = "",
                         contentScale = ContentScale.Inside,
                         colorFilter = ColorFilter.tint(errorContentColor)
@@ -182,9 +174,6 @@ fun PermissionVisualizer (
                                 when (it) {
                                     PermissionInfo.Shell -> {
                                         navController.navigate(NavRoute.SettingsShell.route)
-                                    }
-                                    PermissionInfo.BluetoothConnect -> {
-                                        launcher.launch(Manifest.permission.BLUETOOTH_CONNECT)
                                     }
                                     PermissionInfo.ReadPhoneState -> {
                                         launcher.launch(Manifest.permission.READ_PHONE_STATE)
@@ -260,7 +249,7 @@ fun PermissionVisualizer (
             ) {
                 Image(
                     modifier = Modifier.width(24.dp),
-                    painter = painterResource(R.drawable.baseline_check_24),
+                    painter = painterResource(R.drawable.baseline_check),
                     contentDescription = "",
                     contentScale = ContentScale.Inside,
                     colorFilter = ColorFilter.tint(successContentColor)

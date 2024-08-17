@@ -36,7 +36,7 @@ fun InfoPage() {
 
         PreferenceEntry(
             icon = {
-                DrawableIcon(R.drawable.ic_baseline_loop_24)
+                DrawableIcon(R.drawable.baseline_loop)
             },
             title = stringResource(R.string.restart_app_title),
             subTitle = stringResource(R.string.restart_app_summary)

@@ -42,10 +42,8 @@ import be.casperverswijvelt.unifiedinternetqs.TileApplication
 import be.casperverswijvelt.unifiedinternetqs.TileSyncService
 import be.casperverswijvelt.unifiedinternetqs.data.BITPreferences
 import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.AirplaneModeTileBehaviour
-import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.BluetoothTileBehaviour
 import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.InternetTileBehaviour
 import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.MobileDataTileBehaviour
-import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.NFCTileBehaviour
 import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.TileBehaviour
 import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.WifiTileBehaviour
 import be.casperverswijvelt.unifiedinternetqs.ui.components.AlertDialog
@@ -153,14 +151,6 @@ fun App() {
                 showDialog = showDialog
             ),
             AirplaneModeTileBehaviour(
-                context = context,
-                showDialog = showDialog
-            ),
-            NFCTileBehaviour(
-                context = context,
-                showDialog = showDialog
-            ),
-            BluetoothTileBehaviour(
                 context = context,
                 showDialog = showDialog
             )

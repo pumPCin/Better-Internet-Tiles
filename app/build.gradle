@@ -1,17 +1,16 @@
 plugins {
     id "com.android.application"
-    id "kotlin-android"
+    id "org.jetbrains.kotlin.plugin.compose" version "$kotlin_version"
 }
 
 android {
-
     defaultConfig {
         applicationId "be.casperverswijvelt.unifiedinternetqs"
-        targetSdkVersion 34
-        compileSdk 34
+        targetSdkVersion 36
+        compileSdk 36
         minSdkVersion 31
-        versionCode 3001007
-        versionName "3.0.1"
+        versionCode 3010400
+        versionName "3.1.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -20,8 +19,6 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-        }
-        debug {
         }
     }
     flavorDimensions = ["distribution"]
@@ -32,16 +29,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
+        }
     }
     namespace 'be.casperverswijvelt.unifiedinternetqs'
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.11"
@@ -56,25 +56,26 @@ repositories {
 }
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.13.1"
-    implementation "com.google.android.material:material:1.12.0"
+    implementation "androidx.core:core-ktx:1.17.0"
+    implementation "com.google.android.material:material:1.13.0"
     implementation "androidx.preference:preference-ktx:1.2.1"
 
     // Compose UI
-    implementation 'androidx.activity:activity-compose:1.9.1'
-    implementation 'androidx.compose.animation:animation:1.6.8'
-    implementation 'androidx.compose.ui:ui-tooling:1.6.8'
-    implementation "androidx.compose.material3:material3:1.2.1"
-    implementation "androidx.navigation:navigation-compose:2.7.7"
+    implementation "androidx.activity:activity-compose:1.12.3"
+    implementation "androidx.compose.animation:animation:1.10.2"
+    implementation "androidx.compose.ui:ui-tooling:1.10.2"
+    implementation "androidx.compose.material3:material3:1.4.0"
+    implementation "androidx.navigation:navigation-compose:2.9.7"
+    implementation "androidx.compose.material:material-icons-extended:1.7.8"
 
     // App restarting
-    implementation "com.jakewharton:process-phoenix:2.1.2"
+    implementation "com.jakewharton:process-phoenix:3.0.0"
 
     // Preferences DataStore
-    implementation "androidx.datastore:datastore-preferences:1.1.1"
+    implementation "androidx.datastore:datastore-preferences:1.2.0"
 
     // SU
-    implementation "com.github.topjohnwu.libsu:core:5.0.3"
+    implementation "com.github.topjohnwu.libsu:core:6.0.0"
 }
 
 configurations {

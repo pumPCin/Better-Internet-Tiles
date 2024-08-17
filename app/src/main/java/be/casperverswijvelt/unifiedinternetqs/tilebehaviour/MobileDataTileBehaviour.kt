@@ -13,7 +13,6 @@ import be.casperverswijvelt.unifiedinternetqs.tiles.MobileDataTileService
 import be.casperverswijvelt.unifiedinternetqs.util.AlertDialogData
 import be.casperverswijvelt.unifiedinternetqs.util.executeShellCommandAsync
 import be.casperverswijvelt.unifiedinternetqs.util.getAirplaneModeEnabled
-import be.casperverswijvelt.unifiedinternetqs.util.getCellularNetworkIcon
 import be.casperverswijvelt.unifiedinternetqs.util.getCellularNetworkText
 import be.casperverswijvelt.unifiedinternetqs.util.getDataEnabled
 import kotlinx.coroutines.Runnable
@@ -36,8 +35,9 @@ class MobileDataTileBehaviour(
     override val defaultIcon: Icon
         get() = Icon.createWithResource(
             context,
-            R.drawable.ic_baseline_mobile_data_24
+            R.drawable.baseline_mobile
         )
+
     @Suppress("UNCHECKED_CAST")
     override val tileServiceClass: Class<TileService>
         get() = MobileDataTileService::class.java as Class<TileService>
@@ -49,7 +49,7 @@ class MobileDataTileBehaviour(
             val dataEnabled = getDataEnabled(context)
 
             tile.label = resources.getString(R.string.mobile_data)
-            tile.icon = R.drawable.ic_baseline_mobile_data_24
+            tile.icon = R.drawable.baseline_mobile
 
             if (airplaneModeEnabled) {
 
@@ -69,7 +69,7 @@ class MobileDataTileBehaviour(
                 if (dataEnabled) TileSyncService.isTurningOnData = false
 
                 tile.state = Tile.STATE_ACTIVE
-                tile.icon = getCellularNetworkIcon(context)
+                tile.icon = R.drawable.baseline_mobile
                 tile.subtitle = getCellularNetworkText(
                     context,
                     CellularChangeListener.currentTelephonyDisplayInfo

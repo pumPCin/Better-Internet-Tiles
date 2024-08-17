@@ -8,17 +8,13 @@ import android.service.quicksettings.TileService
 import android.telephony.ServiceState
 import be.casperverswijvelt.unifiedinternetqs.R
 import be.casperverswijvelt.unifiedinternetqs.TileSyncService
-import be.casperverswijvelt.unifiedinternetqs.listeners.CellularChangeListener
 import be.casperverswijvelt.unifiedinternetqs.settings.ISetting
-import be.casperverswijvelt.unifiedinternetqs.settings.settings.wifiSSIDVisibilityOption
 import be.casperverswijvelt.unifiedinternetqs.tiles.InternetTileService
 import be.casperverswijvelt.unifiedinternetqs.util.AlertDialogData
 import be.casperverswijvelt.unifiedinternetqs.util.executeShellCommandAsync
-import be.casperverswijvelt.unifiedinternetqs.util.getCellularNetworkIcon
 import be.casperverswijvelt.unifiedinternetqs.util.getCellularNetworkText
 import be.casperverswijvelt.unifiedinternetqs.util.getDataEnabled
 import be.casperverswijvelt.unifiedinternetqs.util.getWifiEnabled
-import be.casperverswijvelt.unifiedinternetqs.util.getWifiIcon
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -40,13 +36,9 @@ class InternetTileBehaviour(
     override val defaultIcon: Icon
         get() = Icon.createWithResource(
             context,
-            R.drawable.ic_baseline_public_24
+            R.drawable.baseline_net
         )
-    override val lookSettings: Array<ISetting<*>>
-        get() = arrayOf(
-            *super.lookSettings,
-            wifiSSIDVisibilityOption
-        )
+
     @Suppress("UNCHECKED_CAST")
     override val tileServiceClass: Class<TileService>
         get() = InternetTileService::class.java as Class<TileService>
@@ -64,21 +56,14 @@ class InternetTileBehaviour(
                         TileSyncService.isTurningOnWifi = false
                     }
 
-                    val showSSID = runBlocking {
-                        !preferences.getHideWiFiSSID.first()
-                    } && TileSyncService.wifiSSID?.isNotEmpty() == true
-
+                    tile.label = resources.getString(R.string.internet)
                     tile.state = Tile.STATE_ACTIVE
-                    tile.icon = if (TileSyncService.wifiConnected)
-                        getWifiIcon(context)
-                    else
-                        R.drawable.ic_baseline_signal_wifi_0_bar_24
+                    tile.icon = R.drawable.baseline_net
 
-                    tile.label = when {
+                    tile.subtitle = when {
                         TileSyncService.isTurningOnWifi -> resources.getString(R.string.turning_on)
-                        TileSyncService.wifiConnected && showSSID -> TileSyncService.wifiSSID!!
                         TileSyncService.wifiConnected -> resources.getString(R.string.connected)
-                        else -> resources.getString(R.string.on)
+                        else -> resources.getString(R.string.not_connected)
                     }
 
                 }
@@ -88,27 +73,25 @@ class InternetTileBehaviour(
                         TileSyncService.isTurningOnData = false
                     }
 
+                    tile.label = resources.getString(R.string.internet)
                     tile.state = Tile.STATE_ACTIVE
+                    tile.icon = R.drawable.baseline_net
                     if (
                         TileSyncService.serviceState?.let {
                             it.state != ServiceState.STATE_IN_SERVICE
                         } == true
                     ) {
-                        tile.icon = R.drawable.ic_baseline_signal_cellular_0_bar
-                        tile.label = resources.getString(R.string.sim_not_available)
+                        tile.subtitle = resources.getString(R.string.not_connected)
                     } else {
-                        tile.icon = getCellularNetworkIcon(context)
-                        tile.label = getCellularNetworkText(
-                            context,
-                            CellularChangeListener.currentTelephonyDisplayInfo
-                        )
+                        tile.subtitle = resources.getString(R.string.connected)
                     }
                 }
                 else -> {
 
-                    tile.state = Tile.STATE_INACTIVE
-                    tile.icon = R.drawable.ic_baseline_public_off_24
                     tile.label = resources.getString(R.string.internet)
+                    tile.state = Tile.STATE_INACTIVE
+                    tile.icon = R.drawable.baseline_net
+                    tile.subtitle = resources.getString(R.string.off)
                 }
             }
 

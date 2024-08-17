@@ -195,7 +195,7 @@ fun ShellMethodPage(
                                     modifier = Modifier.size(24.dp)
                                 ) {
                                     Image(
-                                        painter = painterResource(R.drawable.baseline_check_24),
+                                        painter = painterResource(R.drawable.baseline_check),
                                         contentDescription = "",
                                         contentScale = ContentScale.Inside,
                                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
@@ -206,7 +206,7 @@ fun ShellMethodPage(
                                 }
 
                                 Image(
-                                    painter = painterResource(R.drawable.baseline_warning_amber_24),
+                                    painter = painterResource(R.drawable.baseline_warning),
                                     contentDescription = "",
                                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.error),
                                     modifier = Modifier

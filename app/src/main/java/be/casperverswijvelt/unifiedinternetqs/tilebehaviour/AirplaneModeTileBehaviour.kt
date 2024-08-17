@@ -30,7 +30,7 @@ class AirplaneModeTileBehaviour(
     override val defaultIcon: Icon
         get() = Icon.createWithResource(
             context,
-            R.drawable.baseline_airplanemode_active_24
+            R.drawable.baseline_airplane
         )
     @Suppress("UNCHECKED_CAST")
     override val tileServiceClass: Class<TileService>
@@ -42,7 +42,7 @@ class AirplaneModeTileBehaviour(
             val airplaneModeEnabled = getAirplaneModeEnabled(context)
 
             tile.label = resources.getString(R.string.airplane_mode)
-            tile.icon = R.drawable.baseline_airplanemode_active_24
+            tile.icon = R.drawable.baseline_airplane
 
             if ((airplaneModeEnabled && !TileSyncService.isTurningOffAirplaneMode) || TileSyncService.isTurningOnAirplaneMode) {
 

@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_CONDITIONS"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
@@ -58,7 +56,7 @@
 
         <service
             android:name=".tiles.InternetTileService"
-            android:icon="@drawable/ic_baseline_public_24"
+            android:icon="@drawable/baseline_net"
             android:label="@string/internet"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
@@ -71,7 +69,7 @@
 
         <service
             android:name=".tiles.WifiTileService"
-            android:icon="@drawable/ic_baseline_signal_wifi_3_bar_24"
+            android:icon="@drawable/baseline_wifi"
             android:label="@string/wifi"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
@@ -86,7 +84,7 @@
 
         <service
             android:name=".tiles.MobileDataTileService"
-            android:icon="@drawable/ic_baseline_mobile_data_24"
+            android:icon="@drawable/baseline_mobile"
             android:label="@string/mobile_data"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
@@ -100,39 +98,9 @@
         </service>
 
         <service
-            android:name=".tiles.NFCTileService"
-            android:icon="@drawable/nfc_24"
-            android:label="@string/nfc"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:exported="true">
-            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
-                android:value="true" />
-            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE"
-                android:value="true" />
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-        </service>
-
-        <service
             android:name=".tiles.AirplaneModeTileService"
-            android:icon="@drawable/baseline_airplanemode_active_24"
+            android:icon="@drawable/baseline_airplane"
             android:label="@string/airplane_mode"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:exported="true">
-            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
-                android:value="true" />
-            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE"
-                android:value="true" />
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".tiles.BluetoothTileService"
-            android:icon="@drawable/baseline_bluetooth_24"
-            android:label="@string/bluetooth"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
             <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"

@@ -3,6 +3,7 @@ package be.casperverswijvelt.unifiedinternetqs.tiles
 import android.content.ComponentName
 import android.graphics.drawable.Icon
 import android.service.quicksettings.TileService
+import be.casperverswijvelt.unifiedinternetqs.TileSyncService
 import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.TileBehaviour
 import be.casperverswijvelt.unifiedinternetqs.tilebehaviour.TileState
 import be.casperverswijvelt.unifiedinternetqs.util.ExecutorServiceSingleton
@@ -13,7 +14,7 @@ abstract class ReportingTileService: TileService() {
     protected lateinit var tileBehaviour: TileBehaviour
 
     private val onUpdateTile: (TileState) -> Unit = {
-        requestUpdateTile()
+        syncTile(it)
     }
 
     override fun onCreate() {
@@ -34,32 +35,26 @@ abstract class ReportingTileService: TileService() {
         super.onDestroy()
     }
 
-    /**
-     * Request the tile to be updated by requesting listening state
-     * on the tile service
-     */
-    private fun requestUpdateTile() {
+    override fun onTileAdded() {
+        super.onTileAdded()
+
         requestListeningState(
             applicationContext,
             ComponentName(application, javaClass)
         )
     }
 
-    override fun onTileAdded() {
-        super.onTileAdded()
-        requestUpdateTile()
-    }
-
     protected abstract fun getTag(): String
 
     override fun onStartListening() {
         super.onStartListening()
-
-        syncTile()
+        TileSyncService.addBehaviourListener(tileBehaviour)
+        syncTile(tileBehaviour.finalTileState)
     }
 
     override fun onStopListening() {
         super.onStopListening()
+        TileSyncService.removeBehaviourListener(tileBehaviour)
     }
 
     override fun onClick() {
@@ -67,9 +62,8 @@ abstract class ReportingTileService: TileService() {
         tileBehaviour.onClick()
     }
 
-    private fun syncTile() {
+    private fun syncTile(tileState: TileState) {
         qsTile?.let {
-            val tileState = tileBehaviour.finalTileState
             it.label = tileState.label
             it.subtitle = tileState.subtitle
             it.state = tileState.state

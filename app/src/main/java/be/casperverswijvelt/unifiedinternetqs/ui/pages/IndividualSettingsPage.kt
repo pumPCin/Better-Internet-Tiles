@@ -51,6 +51,7 @@ fun IndividualSettingsPage(
     tileBehaviour: TileBehaviour
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier
