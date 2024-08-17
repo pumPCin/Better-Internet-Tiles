@@ -38,6 +38,7 @@ class MobileDataTileBehaviour(
             context,
             R.drawable.ic_baseline_mobile_data_24
         )
+
     @Suppress("UNCHECKED_CAST")
     override val tileServiceClass: Class<TileService>
         get() = MobileDataTileService::class.java as Class<TileService>
