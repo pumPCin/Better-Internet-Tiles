@@ -65,11 +65,10 @@ class WifiTileBehaviour(
 
                 tile.subtitle = when {
                     TileSyncService.isTurningOnWifi -> resources.getString(R.string.turning_on)
-                    wifiEnabled -> resources.getString(R.string.on)
-                    !TileSyncService.wifiConnected && showSSID -> resources.getString(R.string.not_connected)
                     TileSyncService.wifiConnected && showSSID -> TileSyncService.wifiSSID
                     TileSyncService.wifiConnected && !showSSID -> resources.getString(R.string.connected)
-
+                    !TileSyncService.wifiConnected && !showSSID -> resources.getString(R.string.not_connected)
+                    else -> resources.getString(R.string.on)
                 }
 
             } else {
