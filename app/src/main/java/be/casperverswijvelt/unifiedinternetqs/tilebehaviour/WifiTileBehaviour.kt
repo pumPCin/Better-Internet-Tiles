@@ -53,20 +53,23 @@ class WifiTileBehaviour(
 
                 if (wifiEnabled) TileSyncService.isTurningOnWifi = false
 
-                val showSSID = runBlocking {
-                    !preferences.getHideWiFiSSID.first()
-                } && TileSyncService.wifiSSID?.isNotEmpty() == true
-
                 tile.state = Tile.STATE_ACTIVE
                 tile.icon = when {
                     TileSyncService.wifiConnected -> getWifiIcon(context)
                     else -> R.drawable.ic_baseline_signal_wifi_0_bar_24
                 }
+
+                val showSSID = runBlocking {
+                    !preferences.getHideWiFiSSID.first()
+                } && TileSyncService.wifiSSID?.isNotEmpty() == true
+
                 tile.subtitle = when {
                     TileSyncService.isTurningOnWifi -> resources.getString(R.string.turning_on)
+                    wifiEnabled -> resources.getString(R.string.on)
+                    !TileSyncService.wifiConnected && showSSID -> resources.getString(R.string.not_connected)
                     TileSyncService.wifiConnected && showSSID -> TileSyncService.wifiSSID
                     TileSyncService.wifiConnected && !showSSID -> resources.getString(R.string.connected)
-                    else -> resources.getString(R.string.on)
+
                 }
 
             } else {
