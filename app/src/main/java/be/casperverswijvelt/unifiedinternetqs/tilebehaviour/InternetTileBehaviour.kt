@@ -89,7 +89,7 @@ class InternetTileBehaviour(
                         tile.subtitle = resources.getString(R.string.not_connected)
                     } else {
                         tile.icon = getCellularNetworkIcon(context)
-                        tile.subtitle =  = resources.getString(R.string.connected)
+                        tile.subtitle = resources.getString(R.string.connected)
                     }
                 }
                 else -> {
