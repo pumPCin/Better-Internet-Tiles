@@ -8,7 +8,6 @@ import android.service.quicksettings.TileService
 import android.telephony.ServiceState
 import be.casperverswijvelt.unifiedinternetqs.R
 import be.casperverswijvelt.unifiedinternetqs.TileSyncService
-import be.casperverswijvelt.unifiedinternetqs.listeners.CellularChangeListener
 import be.casperverswijvelt.unifiedinternetqs.settings.ISetting
 import be.casperverswijvelt.unifiedinternetqs.tiles.InternetTileService
 import be.casperverswijvelt.unifiedinternetqs.util.AlertDialogData
@@ -41,11 +40,7 @@ class InternetTileBehaviour(
             context,
             R.drawable.ic_baseline_public_24
         )
-    override val lookSettings: Array<ISetting<*>>
-        get() = arrayOf(
-            *super.lookSettings,
-            wifiSSIDVisibilityOption
-        )
+
     @Suppress("UNCHECKED_CAST")
     override val tileServiceClass: Class<TileService>
         get() = InternetTileService::class.java as Class<TileService>
@@ -72,7 +67,7 @@ class InternetTileBehaviour(
 
                     tile.subtitle = when {
                         TileSyncService.isTurningOnWifi -> resources.getString(R.string.turning_on)
-                       TileSyncService.wifiConnected -> resources.getString(R.string.connected)
+                        TileSyncService.wifiConnected -> resources.getString(R.string.connected)
                         else -> resources.getString(R.string.not_connected)
                     }
 
