@@ -10,7 +10,6 @@ import be.casperverswijvelt.unifiedinternetqs.R
 import be.casperverswijvelt.unifiedinternetqs.TileSyncService
 import be.casperverswijvelt.unifiedinternetqs.listeners.CellularChangeListener
 import be.casperverswijvelt.unifiedinternetqs.settings.ISetting
-import be.casperverswijvelt.unifiedinternetqs.settings.settings.wifiSSIDVisibilityOption
 import be.casperverswijvelt.unifiedinternetqs.tiles.InternetTileService
 import be.casperverswijvelt.unifiedinternetqs.util.AlertDialogData
 import be.casperverswijvelt.unifiedinternetqs.util.executeShellCommandAsync
@@ -64,21 +63,17 @@ class InternetTileBehaviour(
                         TileSyncService.isTurningOnWifi = false
                     }
 
-                    val showSSID = runBlocking {
-                        !preferences.getHideWiFiSSID.first()
-                    } && TileSyncService.wifiSSID?.isNotEmpty() == true
-
+                    tile.label = resources.getString(R.string.internet)
                     tile.state = Tile.STATE_ACTIVE
                     tile.icon = if (TileSyncService.wifiConnected)
                         getWifiIcon(context)
                     else
                         R.drawable.ic_baseline_signal_wifi_0_bar_24
 
-                    tile.label = when {
+                    tile.subtitle = when {
                         TileSyncService.isTurningOnWifi -> resources.getString(R.string.turning_on)
-                        TileSyncService.wifiConnected && showSSID -> TileSyncService.wifiSSID!!
-                        TileSyncService.wifiConnected -> resources.getString(R.string.connected)
-                        else -> resources.getString(R.string.on)
+                       TileSyncService.wifiConnected -> resources.getString(R.string.connected)
+                        else -> resources.getString(R.string.not_connected)
                     }
 
                 }
@@ -88,6 +83,7 @@ class InternetTileBehaviour(
                         TileSyncService.isTurningOnData = false
                     }
 
+                    tile.label = resources.getString(R.string.internet)
                     tile.state = Tile.STATE_ACTIVE
                     if (
                         TileSyncService.serviceState?.let {
@@ -95,20 +91,18 @@ class InternetTileBehaviour(
                         } == true
                     ) {
                         tile.icon = R.drawable.ic_baseline_signal_cellular_0_bar
-                        tile.label = resources.getString(R.string.sim_not_available)
+                        tile.subtitle = resources.getString(R.string.not_connected)
                     } else {
                         tile.icon = getCellularNetworkIcon(context)
-                        tile.label = getCellularNetworkText(
-                            context,
-                            CellularChangeListener.currentTelephonyDisplayInfo
-                        )
+                        tile.subtitle =  = resources.getString(R.string.connected)
                     }
                 }
                 else -> {
 
+                    tile.label = resources.getString(R.string.internet)
                     tile.state = Tile.STATE_INACTIVE
                     tile.icon = R.drawable.ic_baseline_public_off_24
-                    tile.label = resources.getString(R.string.internet)
+                    tile.subtitle = resources.getString(R.string.off)
                 }
             }
 

@@ -47,12 +47,13 @@ class WifiTileBehaviour(
             val tile = TileState()
             val wifiEnabled = getWifiEnabled(context)
 
-            tile.label = resources.getString(R.string.wifi)
-
             if ((wifiEnabled && !TileSyncService.isTurningOffWifi) || TileSyncService.isTurningOnWifi) {
 
-                if (wifiEnabled) TileSyncService.isTurningOnWifi = false
+                if (wifiEnabled) {
+                    TileSyncService.isTurningOnWifi = false
+                }
 
+                tile.label = resources.getString(R.string.wifi)
                 tile.state = Tile.STATE_ACTIVE
                 tile.icon = when {
                     TileSyncService.wifiConnected -> getWifiIcon(context)
@@ -66,15 +67,15 @@ class WifiTileBehaviour(
                 tile.subtitle = when {
                     TileSyncService.isTurningOnWifi -> resources.getString(R.string.turning_on)
                     TileSyncService.wifiConnected && showSSID -> TileSyncService.wifiSSID
-                    TileSyncService.wifiConnected && !showSSID -> resources.getString(R.string.connected)
-                    !TileSyncService.wifiConnected && !showSSID -> resources.getString(R.string.not_connected)
-                    else -> resources.getString(R.string.on)
+                    TileSyncService.wifiConnected -> resources.getString(R.string.connected)
+                    else -> resources.getString(R.string.not_connected)
                 }
 
             } else {
 
                 if (!wifiEnabled) TileSyncService.isTurningOffWifi = false
 
+                tile.label = resources.getString(R.string.wifi)
                 tile.state = Tile.STATE_INACTIVE
                 tile.icon = R.drawable.ic_baseline_signal_wifi_0_bar_24
                 tile.subtitle = resources.getString(R.string.off)

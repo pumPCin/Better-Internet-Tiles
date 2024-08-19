@@ -17,7 +17,7 @@
     <string name="hide_service_description">Это уведомление обеспечивает правильную работу переключателей.</string>
     <string name="hide_service_title">Спрячь меня!</string>
     <string name="hide_wifi_name">Скрыть имя сети</string>
-    <string name="hide_wifi_name_description">Настройка применяется к переключателям \'Wi-Fi\' и \'Интернет\'</string>
+    <string name="hide_wifi_name_description">Скрывает имя сети на переключателе \'Wi-Fi\'</string>
     <string name="home">Домашняя страница</string>
     <string name="internet">Интернет</string>
     <string name="language">Язык</string>
