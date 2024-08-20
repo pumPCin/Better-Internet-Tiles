@@ -126,7 +126,7 @@ class TileSyncService: Service() {
             Notification.Builder(this, TileApplication.CHANNEL_ID)
                 .setContentTitle(resources.getString(R.string.hide_service_title))
                 .setContentText(resources.getString(R.string.hide_service_description))
-                .setSmallIcon(R.drawable.ic_baseline_public_24)
+                .setSmallIcon(R.drawable.baseline_net)
                 .setContentIntent(pendingIntent)
                 .build()
         val mNotificationManager =

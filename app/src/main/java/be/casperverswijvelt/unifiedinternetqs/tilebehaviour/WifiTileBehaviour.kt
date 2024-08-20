@@ -13,7 +13,6 @@ import be.casperverswijvelt.unifiedinternetqs.tiles.WifiTileService
 import be.casperverswijvelt.unifiedinternetqs.util.AlertDialogData
 import be.casperverswijvelt.unifiedinternetqs.util.executeShellCommandAsync
 import be.casperverswijvelt.unifiedinternetqs.util.getWifiEnabled
-import be.casperverswijvelt.unifiedinternetqs.util.getWifiIcon
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -35,7 +34,7 @@ class WifiTileBehaviour(
     override val defaultIcon: Icon
         get() = Icon.createWithResource(
             context,
-            R.drawable.ic_baseline_signal_wifi_3_bar_24
+            R.drawable.baseline_wifi
         )
 
     @Suppress("UNCHECKED_CAST")
@@ -55,10 +54,7 @@ class WifiTileBehaviour(
 
                 tile.label = resources.getString(R.string.wifi)
                 tile.state = Tile.STATE_ACTIVE
-                tile.icon = when {
-                    TileSyncService.wifiConnected -> getWifiIcon(context)
-                    else -> R.drawable.ic_baseline_signal_wifi_0_bar_24
-                }
+                tile.icon = R.drawable.baseline_wifi
 
                 val showSSID = runBlocking {
                     !preferences.getHideWiFiSSID.first()
@@ -77,7 +73,7 @@ class WifiTileBehaviour(
 
                 tile.label = resources.getString(R.string.wifi)
                 tile.state = Tile.STATE_INACTIVE
-                tile.icon = R.drawable.ic_baseline_signal_wifi_0_bar_24
+                tile.icon = R.drawable.baseline_wifi
                 tile.subtitle = resources.getString(R.string.off)
             }
 

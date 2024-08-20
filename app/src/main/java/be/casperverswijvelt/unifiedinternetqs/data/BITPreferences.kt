@@ -137,7 +137,7 @@ enum class ShellMethod(
         descriptionResource = R.string.root_description,
         isGranted = { Shell.isAppGrantedRoot() == true },
         alertDialog = AlertDialogData(
-            iconResource = R.drawable.baseline_block_24,
+            iconResource = R.drawable.baseline_block,
             titleResource = R.string.allow_root_access,
             messageResource = R.string.allow_root_access_description,
             positiveButtonResource = R.string.ok

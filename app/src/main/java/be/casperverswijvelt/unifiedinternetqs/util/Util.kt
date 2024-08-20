@@ -102,47 +102,6 @@ fun getConnectedWifiSSID(
     }
 }
 
-fun getWifiIcon(context: Context): Int {
-    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    val rssi = cm.activeNetwork?.let {
-        (cm.getNetworkCapabilities(it)?.transportInfo as? WifiInfo)?.rssi
-    }
-
-    val signalStrength = rssi?.let {
-        // We use 5 levels for our icon visualisation, so we use this deprecated
-        //  calculation with 'numLevels' parameter. We don't want to use the system's
-        //  level system since it might differ.
-        WifiManager.calculateSignalLevel(it, 5) // 0-4
-    } ?: 0
-
-    return when (signalStrength) {
-        4 -> R.drawable.ic_baseline_signal_wifi_4_bar_24
-        3 -> R.drawable.ic_baseline_signal_wifi_3_bar_24
-        2 -> R.drawable.ic_baseline_signal_wifi_2_bar_24
-        1 -> R.drawable.ic_baseline_signal_wifi_1_bar_24
-        else -> R.drawable.ic_baseline_signal_wifi_0_bar_24
-    }
-}
-
-fun getCellularNetworkIcon(context: Context): Int {
-
-    val tm =
-        context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-
-    // TODO: We should try to get the signal strength of the data sim here.
-    //  Only solution I found to do this requires fine location access, which I don't really want
-    //  to add.
-
-    return when (tm.signalStrength?.level ?: 0) {
-        4 -> R.drawable.ic_baseline_signal_cellular_4_bar_24
-        3 -> R.drawable.ic_baseline_signal_cellular_3_bar_24
-        2 -> R.drawable.ic_baseline_signal_cellular_2_bar_24
-        1 -> R.drawable.ic_baseline_signal_cellular_1_bar_24
-        else -> R.drawable.ic_baseline_signal_cellular_0_bar
-    }
-}
-
 fun getCellularNetworkText(
     context: Context,
     telephonyDisplayInfo: TelephonyDisplayInfo?

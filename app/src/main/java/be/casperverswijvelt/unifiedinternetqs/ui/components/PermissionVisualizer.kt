@@ -124,7 +124,7 @@ fun PermissionVisualizer (
                 ) {
                     Image(
                         modifier = Modifier.width(24.dp),
-                        painter = painterResource(R.drawable.baseline_warning_amber_24),
+                        painter = painterResource(R.drawable.baseline_warning),
                         contentDescription = "",
                         contentScale = ContentScale.Inside,
                         colorFilter = ColorFilter.tint(errorContentColor)
@@ -249,7 +249,7 @@ fun PermissionVisualizer (
             ) {
                 Image(
                     modifier = Modifier.width(24.dp),
-                    painter = painterResource(R.drawable.baseline_check_24),
+                    painter = painterResource(R.drawable.baseline_check),
                     contentDescription = "",
                     contentScale = ContentScale.Inside,
                     colorFilter = ColorFilter.tint(successContentColor)
