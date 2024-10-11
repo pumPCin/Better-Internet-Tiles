@@ -66,9 +66,6 @@ class TileSyncService: Service() {
     private val wifiChangeListener: WifiChangeListener = WifiChangeListener { type, network ->
         when(type) {
             NetworkChangeType.NETWORK_LOST -> {
-                // If the network that is lost is not the latest
-                //  network that became available, we are still
-                //  connected.
                 wifiConnected = latestAvailableWifiNetwork != network
             }
             NetworkChangeType.NETWORK_AVAILABLE -> {
@@ -207,7 +204,7 @@ class TileSyncService: Service() {
     }
 
     private fun <T>requestTileBehaviourUpdate(cls: Class<T>) {
-        behaviourListeners.forEach {
+        (behaviourListeners.clone() as List<TileBehaviour>).forEach {
             if (it.javaClass == cls) it.updateTile()
         }
     }
