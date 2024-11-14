@@ -5,7 +5,6 @@ plugins {
 }
 
 android {
-
     defaultConfig {
         applicationId "be.casperverswijvelt.unifiedinternetqs"
         targetSdkVersion 35
@@ -16,7 +15,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -33,21 +31,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     namespace "be.casperverswijvelt.unifiedinternetqs"
-
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildFeatures {
         compose = true
     }
     androidResources {
         generateLocaleConfig = true
-    }
-}
-kotlin {
-    compilerOptions {
-        jvmTarget = 21
     }
 }
 repositories {
