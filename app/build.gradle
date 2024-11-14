@@ -46,8 +46,9 @@ android {
     }
 }
 kotlin {
-    compilerOptions {
-        jvmTarget = "11"
+    jvm {
+        jvmToolchain(1.8)
+        withJava()
     }
 }
 repositories {
