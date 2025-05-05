@@ -72,7 +72,7 @@ dependencies {
     implementation "com.jakewharton:process-phoenix:3.0.0"
 
     // Preferences DataStore
-    implementation "androidx.datastore:datastore-preferences:1.1.4"
+    implementation "androidx.datastore:datastore-preferences:1.1.5"
 
     // SU
     implementation "com.github.topjohnwu.libsu:core:6.0.0"
