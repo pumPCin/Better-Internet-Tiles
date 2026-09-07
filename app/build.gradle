@@ -6,8 +6,8 @@ plugins {
 android {
     defaultConfig {
         applicationId "be.casperverswijvelt.unifiedinternetqs"
-        targetSdkVersion 36
-        compileSdk 36
+        targetSdkVersion 37
+        compileSdk 37
         minSdkVersion 31
         versionCode 3010400
         versionName "3.1.4"
